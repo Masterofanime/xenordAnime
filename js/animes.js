@@ -1,48 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Animes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-          body {
-        margin: 0;
-        font-family: 'Outfit', 'Poppins', sans-serif;
-        background-color: var(--bg-dark);
-        color: white;
-        overflow-x: hidden;
-      }
-  </style>
-</head>
-
-<body>
-
-<div class="card-anime-section">
-  <h3 class="section-title">
-    FILTERD ANIME
-    <span class="resultCount">
-      <span id="ResultsEstimated">0</span> Results
-    </span>
-  </h3>
-  
-  <div class="ani-grid-layout" id="FilterdAnime"></div>
-</div>
-
-  <!-- PAGINATION -->
-<div id="pagination"></div>
-<div id="app" class="container">
-  <div id="pagination-container"></div>
-</div>
-
-<script>
   /* =====================
    CONFIG
 ===================== */
   const API_BASE = "https://animo.qzz.io/api/v1";
-  
+  const TitelChange = document.querySelector('.SearchAnT');
   let currentType =
     new URLSearchParams(window.location.search).get("type") || "top-airing";
   
@@ -55,16 +16,18 @@
       const data = await res.json();
       
       console.log(data);
-      
+      TitelChange.textContent= currentType;
       const animeList = data.data.response;
       const pageInfo = data.data.pageInfo;
       
       renderAnimeSection(animeList);
       renderPagination(pageInfo);
+      estimatedResult(pageInfo,animeList)
       
       // ✅ Update result count
-      const countEl = document.getElementById("ResultsEstimated");
-      if (countEl) countEl.textContent = animeList.length;
+       function estimatedResult(page,length) {
+  document.getElementById("ResultsEstimated").textContent = page.totalPages * length.length;
+}
       
     } catch (e) {
       console.error(e);
@@ -176,7 +139,3 @@
   document.addEventListener("DOMContentLoaded", () => {
     loadAnime(1);
   });
-</script>
-
-</body>
-</html>

@@ -4,7 +4,9 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>XeAnime - Streaming</title>
+      
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      
       <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
       <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -32,75 +34,67 @@
    <link rel="icon" href="https://via.placeholder.com/32.png?text=F" />
    </head>
    <body>
-      <header class="navbar">
-         <div class="nav-left">
-            <i class="fas fa-bars menu-toggle menuToggle"></i>
-            <div class="logo">XE<span>ANIME</span></div>
-         </div>
-         <div class="search-container">
-           <button onclick="window.location.href='/filter.html'" class="filter-btn"> <i class="fa-solid fa-filter"></i></button>
-            <input type="text" id="search-input" class="search-input" placeholder="Search anime...">
-            <div class="search-results" id="search-results"></div>
-            <i class="fa-solid fa-x search-btnX"></i>
-            <i class="fa fa-search" id="search-btn"></i>
-         </div>
-         <div class="nav-right">
-            <div class="social-icons">
-               <i class="fab fa-discord"></i>
-               <i class="fab fa-facebook"></i>
-               <i class="fab fa-telegram"></i>
+<header class="navbar">
+    <div class="nav-left">
+        <i class="fas fa-bars menu-toggle menuToggle"></i>
+        <div class="logo">XE<span>ANIME</span></div>
+    </div>
+    <div class="search-container">
+        <button onclick="window.location.href='/filter.html'" class="filter-btn"> <i class="fa-solid fa-filter"></i></button>
+        <input type="text" id="search-input" class="search-input" placeholder="Search anime...">
+        <div class="search-results" id="search-results"></div>
+        <i class="fa-solid fa-x search-btnX"></i>
+        <i class="fa fa-search" id="search-btn"></i>
+    </div>
+    <div class="nav-right">
+        <div class="social-icons">
+            <i class="fab fa-discord"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-telegram"></i>
+        </div>
+        <div class="">
+            <i class="fa fa-search searchIcon"></i>
+            <i class="fa-solid fa-x searchIcon searchCloseIcon"></i>
+        </div>
+        <button class="login-btn">Login</button>
+    </div>
+</header>
+<aside class="xe-sidebar" id="sidebar">
+    <div class="xe-sidebar-content">
+        <div class="xe-close-menu" id="closeBtn">
+            <i class="fa-solid fa-chevron-left"></i> Close menu
+        </div>
+        <div class="xe-action-grid">
+            <div class="xe-action-item"><i class="fa-solid fa-tower-broadcast"></i><span>W.2.G</span></div>
+            <div class="xe-action-item">
+                <div class="xe-lang-switch" id="langSwitch">
+                    <span class="xe-active">EN</span><span>JP</span>
+                </div>
+                <span>English</span>
             </div>
-            <div class="">
-               <i class="fa fa-search searchIcon"></i>
-               <i class="fa-solid fa-x searchIcon searchCloseIcon"></i>
+            <div class="xe-action-item"><i class="fa-solid fa-shuffle"></i><span>Random</span></div>
+            <div class="xe-action-item"><i class="fa-solid fa-rss"></i><span>News</span></div>
+        </div>
+        <nav class="xe-nav-list">
+            <a class="xe-nav-link" href="animes.html?type=top-airing">Top Airing</a>
+            <a class="xe-nav-link" href="animes.html?type=most-popular">Most Popular</a>
+            <a class="xe-nav-link" href="animes.html?type=movie">Movies</a>
+            <a href="home.html" class="xe-nav-link">HOME</a>
+            <a href="#" class="xe-nav-link">Under</a>
+            <a href="#" class="xe-nav-link">Development </a>
+        </nav>
+        <div class="xe-genress-section">
+            <div class="xe-genress-header" id="genressToggle">
+                <i class="fa-solid fa-chevron-down"></i> Genre
             </div>
-            <button class="login-btn">Login</button>
-         </div>
-         
-
-
-
-      </header>
-      
-            <aside class="xe-sidebar" id="sidebar">
-          <div class="xe-sidebar-content">
-              <div class="xe-close-menu" id="closeBtn">
-                  <i class="fa-solid fa-chevron-left"></i> Close menu
-              </div>
-              
-              <div class="xe-action-grid">
-                  <div class="xe-action-item"><i class="fa-solid fa-tower-broadcast"></i><span>W.2.G</span></div>
-                  <div class="xe-action-item">
-                      <div class="xe-lang-switch" id="langSwitch">
-                          <span class="xe-active">EN</span><span>JP</span>
-                      </div>
-                      <span>English</span>
-                  </div>
-                  <div class="xe-action-item"><i class="fa-solid fa-shuffle"></i><span>Random</span></div>
-                  <div class="xe-action-item"><i class="fa-solid fa-rss"></i><span>News</span></div>
-              </div>
-              
-              <nav class="xe-nav-list">
-                  <a class="xe-nav-link" href="animes.html?type=top-airing">Top Airing</a>
-<a class="xe-nav-link" href="animes.html?type=most-popular">Most Popular</a>
-<a class="xe-nav-link" href="animes.html?type=movie">Movies</a>
-                  <a href="home.html" class="xe-nav-link">HOME</a>
-                  <a href="#" class="xe-nav-link">Under</a>
-                  <a href="#" class="xe-nav-link">Development </a>
-              </nav>
-              
-              <div class="xe-genress-section">
-                  <div class="xe-genress-header" id="genressToggle">
-                      <i class="fa-solid fa-chevron-down"></i> Genre
-                  </div>
-                  <div class="xe-genress-grid" id="genressContainer"></div>
-                  <button class="xe-more-btn" id="showMoreBtn">
-                      <i class="fa-solid fa-plus"></i> More
-                  </button>
-              </div>
-          </div>
-      </aside>
-      <div class="xe-sidebar-overlay" id="overlay"></div>
+            <div class="xe-genress-grid" id="genressContainer"></div>
+            <button class="xe-more-btn" id="showMoreBtn">
+                <i class="fa-solid fa-plus"></i> More
+            </button>
+        </div>
+    </div>
+</aside>
+<div class="xe-sidebar-overlay" id="overlay"></div>
        <!-- LOADER -->
   <div id="page-loader">
     <h1 class="site-title">

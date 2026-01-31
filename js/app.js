@@ -187,13 +187,30 @@ searchInput.addEventListener("input", (e) => {
       searchResults.innerHTML = "";
       return;
    }
+// ------------------------
+// SEARCH BUTTON CLICK
+// ------------------------
+searchBtn2.addEventListener("click", () => {
+    const query = searchInput.value.trim();
+    if (!query) return alert("Please enter a search term.");
+    
+    // Go to filter.html with the query as URL param
+    const targetUrl = `filter.html?keyword=${encodeURIComponent(query)}`;
+    window.location.href = targetUrl;
+});
 
+// ------------------------
+// ENTER KEY PRESS
+// ------------------------
+searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") searchBtn2.click();
+});
 
    searchTimeout = setTimeout(async () => {
       const results = await searchAnime(query);
       displayResults(results);
 
-   }, 300);
+   }, 1000);
 });
 
 // Close dropdowns

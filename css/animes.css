@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: 'Outfit', 'Poppins', sans-serif;
+  background-color: var(--bg-dark);
+  color: white;
+  overflow-x: hidden;
+}
+html,body{
+  margin: 0;
+  padding: 0;
+}
+     .card-anime-section{
+         border: none!important;
+         
+        
+     }
+    .resultCount{
+        float: right;
+        color: var(--text-main);
+        font-weight: 400;
+        font-size: 1rem;
+    }
