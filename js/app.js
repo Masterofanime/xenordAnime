@@ -172,22 +172,21 @@ function displayResults(results) {
 }
 
 searchInput.addEventListener("input", (e) => {
-   clearTimeout(searchTimeout);
-   const query = e.target.value.trim();
-   const hasValue = query.length > 0;
-   searchBtn2.classList.toggle('active', hasValue);
-   removeValBtn.classList.toggle('active', hasValue);
-   removeValBtn.addEventListener('click', () => {
-      searchInput.value = '';
-      searchBtn2.classList.remove('active');
-      removeValBtn.classList.remove('active');
-   })
-   if (query.length < 2) {
-      searchResults.style.display = "none";
-      searchResults.innerHTML = "";
-      return;
-   }
-// ------------------------
+    clearTimeout(searchTimeout);
+    const query = e.target.value.trim();
+    const hasValue = query.length > 0;
+    
+    // UI State Management
+    searchBtn2.classList.toggle('active', hasValue);
+    removeValBtn.classList.toggle('active', hasValue);
+    
+    if (query.length < 2) {
+        searchResults.style.display = "none";
+        searchResults.innerHTML = "";
+        return;
+    }
+    
+    // ------------------------
 // SEARCH BUTTON CLICK
 // ------------------------
 searchBtn2.addEventListener("click", () => {
@@ -205,13 +204,25 @@ searchBtn2.addEventListener("click", () => {
 searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") searchBtn2.click();
 });
-
-   searchTimeout = setTimeout(async () => {
-      const results = await searchAnime(query);
-      displayResults(results);
-
-   }, 1000);
+    
+    
+    // --- ADD LOADER HERE ---
+    searchResults.style.display = "block";
+    searchResults.innerHTML = `
+        <div class="search-loader-container">
+            <div class="dots">
+                <div style="animation: dotGrowing 1s infinite ease-in-out;"></div>
+                <div style="animation: dotGrowing 1s infinite ease-in-out 0.2s;"></div>
+                <div style="animation: dotGrowing 1s infinite ease-in-out 0.4s;"></div>
+            </div>
+        </div>`;
+    
+    searchTimeout = setTimeout(async () => {
+        const results = await searchAnime(query);
+        displayResults(results); // This will naturally overwrite the loader
+    }, 300);
 });
+
 
 // Close dropdowns
 document.addEventListener("click", (e) => {
@@ -429,7 +440,24 @@ function handleRelatedToggle() {
 
 
 // --- RUING ANIME RELATED ANIME JS End --
+// CUSTOME LOADER GLOBAL
 
+/**
+ * Call this function to hide the loader once your 
+ * data (Episodes, Servers, Details) is ready.
+ */
+function hidePageLoader() {
+  const loader = document.getElementById("page-loader");
+  if (loader) {
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+    
+    // Remove from DOM after transition to save memory
+    setTimeout(() => {
+      loader.remove();
+    }, 500); 
+  }
+}
 
 
 // RUING ANIME RECOMMENDED ANIME JS START

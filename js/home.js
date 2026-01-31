@@ -248,7 +248,7 @@ async function init() {
     renderAnimeLists(homeData.latestCompleted, 'LatestCompleted');
     
     
-    
+    hidePageLoader();
     
   }
   catch (error) {
@@ -257,22 +257,6 @@ async function init() {
     if (errorEl) errorEl.innerHTML = `<h2>Error: ${error.message}</h2>`;
   }
   
-  
-  
-  
-  
-  
-  const loader = document.getElementById("page-loader");
-  const app = document.getElementById("app");
-  if (loader && app) {
-    loader.style.transition = "opacity 0.3s ease";
-    loader.style.opacity = "0";
-    loader.addEventListener("transitionend", () => {
-      loader.remove();
-      app.classList.remove("app-hidden");
-      app.classList.add("app-visible");
-    });
-  }
 }
 init();
 

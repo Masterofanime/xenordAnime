@@ -114,6 +114,7 @@ async function loadAnime(page = 1) {
   estimatedResult(data.data.pageInfo.totalPages, data.data.response.length);
   renderAnimeSection(data.data.response, "FilterdAnime");
   applyImageLoader();
+  hidePageLoader();
   renderPagination(data.data.pageInfo);
 }
 
@@ -143,6 +144,7 @@ async function loadSearch(page = 1, keyword = "") {
     estimatedResult(data.data.pageInfo.totalPages, data.data.response.length);
     renderAnimeSection(data.data.response, "FilterdAnime");
     applyImageLoader();
+    hidePageLoader();
     renderPagination(data.data.pageInfo);
   } catch (e) {
     console.error(e);

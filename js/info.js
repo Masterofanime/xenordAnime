@@ -1,17 +1,28 @@
-const animeId = new URLSearchParams(window.location.search).get("id")||'jack-of-all-trades-party-of-none-20333';
+const animeId = new URLSearchParams(window.location.search).get("id")//||'jack-of-all-trades-party-of-none-20333';
 
 const API_BASE = "https://animo.qzz.io/api/v1";
 
 let animeDet = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (!animeId) {
-    console.error("No anime ID found");
+  
+    // 1. --- REDIRECT GUARD ---
+  if (!animeId || animeId === 'null' || animeId === 'undefined') {
+    console.error('Anime ID missing. Redirecting...');
+    showNotification("error", "Anime not found. Redirecting to home...");
     
-    document.getElementById("anime-info").innerHTML = `<p>No anime ID found in URL.</p>`;
+    // Delay redirect by 3 seconds so the user can see the notification
+    setTimeout(() => {
+      window.location.href = 'home.html'; // Change to '404.html' if you have one
+    }, 3000);
+    
+    // Stop all further code execution
+    if (epGrid) epGrid.innerHTML = '<div class="no-results">Invalid Anime ID. Redirecting...</div>';
     return;
+  
   }
   fetchAnimeDetails();
+ 
 });
 
 
@@ -32,6 +43,7 @@ async function fetchAnimeDetails() {
   
   renderAnimeLists(json.data.mostPopular, 'MostPopular');
     }
+    hidePageLoader();
     
   } catch (err) {
     document.getElementById("app").innerHTML = `
@@ -40,6 +52,7 @@ async function fetchAnimeDetails() {
         <p>${err.message}</p>
       </div>
     `;
+    hidePageLoader();
   }
 }
 

@@ -90,7 +90,7 @@ function setFavicon(iconUrl) {
 async function fetchAnimeDetails(animeId) {
   if (!animeId) {
     console.warn('Please provide an anime ID.');
-    
+    showNotification("error", "Search Anime Or Go On Home Page!");
     return null;
   }
   
@@ -196,26 +196,54 @@ searchInput.addEventListener("input", (e) => {
     clearTimeout(searchTimeout);
     const query = e.target.value.trim();
     const hasValue = query.length > 0;
+    
+    // UI State Management
     searchBtn2.classList.toggle('active', hasValue);
     removeValBtn.classList.toggle('active', hasValue);
-    removeValBtn.addEventListener('click', () => {
-      searchInput.value = '';
-      searchBtn2.classList.remove('active');
-      removeValBtn.classList.remove('active');
-    })
+    
     if (query.length < 2) {
-      searchResults.style.display = "none";
-      searchResults.innerHTML = "";
-      return;
+        searchResults.style.display = "none";
+        searchResults.innerHTML = "";
+        return;
     }
+    
+    // ------------------------
+// SEARCH BUTTON CLICK
+// ------------------------
+searchBtn2.addEventListener("click", () => {
+    const query = searchInput.value.trim();
+    if (!query) return alert("Please enter a search term.");
+    
+    // Go to filter.html with the query as URL param
+    const targetUrl = `filter.html?keyword=${encodeURIComponent(query)}`;
+    window.location.href = targetUrl;
+});
 
-
+// ------------------------
+// ENTER KEY PRESS
+// ------------------------
+searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") searchBtn2.click();
+});
+    
+    
+    // --- ADD LOADER HERE ---
+    searchResults.style.display = "block";
+    searchResults.innerHTML = `
+        <div class="search-loader-container">
+            <div class="dots">
+                <div style="animation: dotGrowing 1s infinite ease-in-out;"></div>
+                <div style="animation: dotGrowing 1s infinite ease-in-out 0.2s;"></div>
+                <div style="animation: dotGrowing 1s infinite ease-in-out 0.4s;"></div>
+            </div>
+        </div>`;
+    
     searchTimeout = setTimeout(async () => {
-      const results = await searchAnime(query);
-      displayResults(results);
-
+        const results = await searchAnime(query);
+        displayResults(results); // This will naturally overwrite the loader
     }, 300);
 });
+
 
 // Close dropdowns
 document.addEventListener("click", (e) => {
@@ -233,9 +261,9 @@ function RenderServerBtn() {
    dubServers.innerHTML = '';
 
    // 1. Logic: Filter arrays to ONLY allow names 'hd-1' or 'hd-2'
-   const validSub = (subDubData.sub || []).filter(item => 
+const validSub = (subDubData.sub || []).filter(item => 
       ['hd-1', 'hd-2'].includes(item.name.toLowerCase())
-   );
+  );
    const validDub = (subDubData.dub || []).filter(item => 
       ['hd-1', 'hd-2'].includes(item.name.toLowerCase())
    );
@@ -341,7 +369,7 @@ function updateUI() {
   const isSmallSeries = episodesData.length <= 100;
   
   // Save the current episode
-  localStorage.setItem(`progress_${animeId}`, currentActiveEp);``
+  localStorage.setItem(`progress_${animeId}`, currentActiveEp);
   
   
 
@@ -942,16 +970,53 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGenres();
 });
 
+/**
+ * Call this function to hide the loader once your 
+ * data (Episodes, Servers, Details) is ready.
+ */
+function hidePageLoader() {
+  const loader = document.getElementById("page-loader");
+  if (loader) {
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+    
+    // Remove from DOM after transition to save memory
+    setTimeout(() => {
+      loader.remove();
+    }, 500); 
+  }
+}
 
 
 
 // --- SECTION START: Initialization ---
 async function init() {
-   // 1. Fetch the episodes first
-   episodesData = await FatchEpData();
+  
+  
+  // 1. --- REDIRECT GUARD ---
+if (!animeId || animeId === 'null' || animeId === 'undefined') {
+  console.error('Anime ID missing. Redirecting...');
+  showNotification("error", "Anime not found. Redirecting to home...");
+  
+  // Delay redirect by 3 seconds so the user can see the notification
+  setTimeout(() => {
+    window.location.href = 'home.html'; // Change to '404.html' if you have one
+  }, 3000);
+  
+  // Stop all further code execution
+  if (epGrid) epGrid.innerHTML = '<div class="no-results">Invalid Anime ID. Redirecting...</div>';
+  return;
+}
+   try {
+      // 1. --- LOAD EPISODES FIRST ---
+      episodesData = await FatchEpData();
 
-   if (episodesData.length > 0) {
-      // Setup the dropdown ranges (1-100, 101-200, etc.)
+      if (!episodesData || episodesData.length === 0) {
+         epGrid.innerHTML = '<p style="color:white;text-align:center;">No episodes available.</p>';
+         return; // Stop here if no episodes exist
+      }
+
+      // Setup Episode UI (Ranges and Dropdowns)
       const ranges = [];
       for (let i = 0; i < episodesData.length; i += 100) {
          ranges.push({
@@ -963,78 +1028,81 @@ async function init() {
          `<option value="${r.start}">EP: ${r.start}-${r.end}</option>`
       ).join('');
 
-      // Only show range selector if there are more than 100 episodes
       rangeSelect.style.display = episodesData.length > 100 ? 'block' : 'none';
       rangeSelect.onchange = (e) => renderEpisodes(e.target.value);
-      
+
+      // Handle Progress: Restore previous episode or default to 1
+      const savedEpisode = localStorage.getItem(`progress_${animeId}`);
+      if (savedEpisode) {
+         currentActiveEp = Number(savedEpisode);
+         showNotification("info", `Resumed at Episode ${savedEpisode}`);
+      } else {
+         currentActiveEp = 1;
+      }
+
+      // Initial Render of the episode list
       renderEpisodes(1);
       updateNavButtons();
-   } else {
-      epGrid.innerHTML = '<p style="color:white;text-align:center;">No episodes available.</p>';
-   }
 
-   // 2. Fetch Anime Meta Details (Details, Related, Recommended)
-   const animeDetailsContainer = await fetchAnimeDetails(animeId);
-   
-   if (animeDetailsContainer && animeDetailsContainer.data) {
-      const animeData = animeDetailsContainer.data;
+      // 2. --- LOAD SERVER BUTTONS ---
+      // Get the object for the current active episode
+      const activeEpObj = episodesData.find(e => e.episodeNumber === currentActiveEp) || episodesData[0];
       
-      
-      // Update social tags dynamically
-  updateSocialTags({
-    title: animeData.title,
-    description: animeData.synopsis || `Watch ${animeData.title} in HD with English subtitles.`,
-    image: animeData.poster,
-    url: window.location.href
-  });
+      if (activeEpObj) {
+         // Restore Server Preferences from LocalStorage BEFORE rendering buttons
+         const savedServer = localStorage.getItem('selectedServer');
+         if (savedServer) {
+            selectedServer = JSON.parse(savedServer);
+         }
 
-  // Update favicon (small version recommended if available, otherwise poster)
-  setFavicon(animeData.poster);
-
-      
-      // Update UI with the dynamic data
-      generateAnimeCard(animeData);
-      renderSeasons(animeData.moreSeasons);
-      
-      // Handle Related & Recommended (assuming your existing functions handle the arrays)
-      if (animeData.related) {
-         // This assumes 'animeDetile' is what your renderRelatedList uses
-         window.animeDetile = animeDetailsContainer; 
-         renderRelatedList();
+         // Fetch servers and render buttons (RenderServerBtn is called inside this)
+         await loadEpisodeServers(activeEpObj.id);
+         
+         // Update the UI (Display current ep number and trigger player load)
+         updateUI();
+         hidePageLoader();
       }
+
+      // 3. --- LOAD ANIME DETAILS & RELATED ---
+      const animeDetailsContainer = await fetchAnimeDetails(animeId);
       
-      if (animeData.recommended) {
-         recommendeAnime(animeData.recommended);
+      if (animeDetailsContainer && animeDetailsContainer.data) {
+         const animeData = animeDetailsContainer.data;
+         
+         // Update SEO & Favicon
+         updateSocialTags({
+            title: animeData.title,
+            description: animeData.synopsis || `Watch ${animeData.title} in HD.`,
+            image: animeData.poster,
+            url: window.location.href
+         });
+         setFavicon(animeData.poster);
+
+         // Render UI Elements
+         generateAnimeCard(animeData);
+         renderSeasons(animeData.moreSeasons);
+         
+         // Handle Related & Recommended
+         if (animeData.related) {
+            window.animeDetile = animeDetailsContainer; 
+            renderRelatedList();
+         }
+         
+         if (animeData.recommended) {
+            recommendeAnime(animeData.recommended);
+         }
+
+         // Finally, apply the image loader to new posters
+         applyImageLoader();
+         
       }
-      // Only call servers API once per episode change
-// Restore previous selection if exists
-const savedEpisode = localStorage.getItem(`progress_${animeId}`);
-if (savedEpisode) {
-  currentActiveEp = Number(savedEpisode);
-} else {
-  currentActiveEp = 1; // Default if never watched before
-}
-if (savedEpisode) {
-    showNotification("info", `Resumed at Episode ${savedEpisode}`);
+
+   } catch (error) {
+      console.error("Critical Error during Initialization:", error);
+      showNotification("error", "Something went wrong while loading. Please refresh.");
+   }
 }
 
-const savedServer = localStorage.getItem('selectedServer');
-if (savedServer) {
-  selectedServer = JSON.parse(savedServer);
-}
-updateUI();
-applyImageLoader();
-   }
-
-   // 3. Attach Event Listeners
-   const showMoreBtn = document.getElementById('show-more');
-   if (showMoreBtn) {
-      showMoreBtn.addEventListener('click', handleRelatedToggle);
-   }
-   if (!animeId) {
-  showNotification("error","Please search for an anime!");
-}
-}
 
 
 // Run on load

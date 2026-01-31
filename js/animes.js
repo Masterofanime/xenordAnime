@@ -137,5 +137,7 @@
      INIT
   ===================== */
   document.addEventListener("DOMContentLoaded", () => {
+    hidePageLoader();
     loadAnime(1);
+    
   });
