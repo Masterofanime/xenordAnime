@@ -599,7 +599,7 @@ function applyImageLoader() {
 
 // IMAGE LAYZE CUSTOM LOADER JS END
 
-// --- RUING ANIME Moseseasone JS START --
+// --- RUING ANIME Mose window.location.href =`info.html${id}`; JS START --
 
 const seasonsgrid = document.getElementById('seasons-grid');
 const seasonsSection = document.querySelector('.seasons-section');
@@ -618,7 +618,7 @@ const seasonsSection = document.querySelector('.seasons-section');
       data.map(season => `
         <div class="season-card ${season.isActive ? 'active' : ''}" 
              style="background-image: url('${season.poster}')"
-             onclick="handleSeasonClick('${season.id}')">
+             onclick="window.location.href ='info.html?id=${season.id}'">
           <span class="season-title">${season.alternativeTitle}</span>
         </div>
       `).join('');

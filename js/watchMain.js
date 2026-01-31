@@ -591,14 +591,14 @@ const seasonsgrid = document.getElementById('seasons-grid');
       data.map(season => `
         <div class="season-card ${season.isActive ? 'active' : ''}" 
              style="background-image: url('${season.poster}')"
-             onclick="handleSeasonClick('${season.id}')">
+             onclick="window.location.href =${infoPageUrl}?id=${season.id}">
           <span class="season-title">${season.alternativeTitle}</span>
         </div>
       `).join('');
     }
 
     function handleSeasonClick(id) {
-      window.location.href =`watch.html${id}`;
+      window.location.href =`info.html${id}`;
       // You can add your navigation logic here
     }
 
