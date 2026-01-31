@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>XeAnime - Streaming</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      <link rel="stylesheet" href="../css/Watch.css">
+      <link rel="stylesheet" href="../css/style.css">
+   <!-- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) -->
+   <meta property="og:title" content="My Awesome Website" />
+   <meta property="og:description" content="Discover amazing content about technology, design, and more!" />
+   <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=Social+Preview+Image" />
+   <meta property="og:url" content="https://example.com" />
+   <meta property="og:type" content="website" />
+   <meta property="og:site_name" content="My Awesome Website" />
+   
+   <!-- Twitter Cards -->
+   <meta name="twitter:card" content="summary_large_image" />
+   <meta name="twitter:title" content="My Awesome Website" />
+   <meta name="twitter:description" content="Discover amazing content about technology, design, and more!" />
+   <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=Social+Preview+Image" />
+   <meta name="twitter:site" content="@YourTwitterHandle" />
+   
+   <!-- Favicon -->
+   <link rel="icon" href="https://via.placeholder.com/32.png?text=F" />
+   
+   </head>
+   <body>
+          <header class="navbar">
+         <div class="nav-left">
+            <i class="fas fa-bars menu-toggle menuToggle"></i>
+            <div class="logo">XE<span>ANIME</span></div>
+         </div>
+         <div class="search-container">
+            <button onclick="window.location.href='/filter.html'" class="filter-btn"> <i class="fa-solid fa-filter"></i></button>
+            <input type="text" id="search-input" class="search-input" placeholder="Search anime...">
+            <div class="search-results" id="search-results"></div>
+            <i class="fa-solid fa-x search-btnX"></i>
+            <i class="fa fa-search" id="search-btn"></i>
+         </div>
+         <div class="nav-right">
+            <div class="social-icons">
+               <i class="fab fa-discord"></i>
+               <i class="fab fa-facebook"></i>
+               <i class="fab fa-telegram"></i>
+            </div>
+            <div class="">
+               <i class="fa fa-search searchIcon"></i>
+               <i class="fa-solid fa-x searchIcon searchCloseIcon"></i>
+            </div>
+            <button class="login-btn">Login</button>
+         </div>
+        
+         
+      </header>
+            <aside class="xe-sidebar" id="sidebar">
+         <div class="xe-sidebar-content">
+            <div class="xe-close-menu" id="closeBtn">
+               <i class="fa-solid fa-chevron-left"></i> Close menu
+            </div>
+            
+            <div class="xe-action-grid">
+               <div class="xe-action-item"><i class="fa-solid fa-tower-broadcast"></i><span>W.2.G</span></div>
+               <div class="xe-action-item">
+                  <div class="xe-lang-switch" id="langSwitch">
+                     <span class="xe-active">EN</span><span>JP</span>
+                  </div>
+                  <span>English</span>
+               </div>
+               <div class="xe-action-item"><i class="fa-solid fa-shuffle"></i><span>Random</span></div>
+               <div class="xe-action-item"><i class="fa-solid fa-rss"></i><span>News</span></div>
+            </div>
+            
+            <nav class="xe-nav-list">
+               <a href="home.html" class="xe-nav-link">HOME</a>
+               <a href="#" class="xe-nav-link">Under</a>
+               <a href="#" class="xe-nav-link">Development </a>
+            </nav>
+            
+            <div class="xe-genress-section">
+               <div class="xe-genress-header" id="genressToggle">
+                  <i class="fa-solid fa-chevron-down"></i> Genre
+               </div>
+               <div class="xe-genress-grid" id="genressContainer"></div>
+               <button class="xe-more-btn" id="showMoreBtn">
+                  <i class="fa-solid fa-plus"></i> More
+               </button>
+            </div>
+         </div>
+      </aside>
+      <div class="xe-sidebar-overlay" id="overlay"></div>
+      
+      <div class="main-wrapper">
+         <div class="containers-wrapper">
+    <div class="container">
+         <!-- video player section -->
+         <div class="video-section">
+            <div class="aspect-ratio-box" id="player">
+               <!-- Embed in iframe -->
+           <!--  <iframe 
+           src="https://animo.qzz.io/api/v1/embed/hd-2/47085/sub"
+              width="100%" 
+              height="100%"
+              frameborder="0"
+              allowfullscreen="true"
+              ></iframe> -->
+                  
+              <div class="loader"></div>
+            </div>
+            
+            <div class="video-controls-bar">
+               <span>Auto Play <strong class="toggle-on">On</strong></span>
+               <span>Auto Skip Intro <strong class="toggle-on">On</strong></span>
+               <span>Auto Next <strong class="toggle-on">On</strong></span>
+            </div>
+         </div>
+
+      <!-- player section end -->
+      
+         <div class="server-selection">
+            <div class="privNext">
+               <button id="prevBtn" class="btn-nav" onclick="privBtn()">
+               <i class="fa-solid fa-chevron-left"></i> Previous
+               </button>
+               <button id="nextBtn" class="btn-nav" onclick="NextBtn()">
+               Next <i class="fa-solid fa-chevron-right"></i>
+               </button>
+            </div>
+            <p class="status-msg">You are watching <span id="currentEpDisplay">Episode: 1</span></p>
+            <p class="server-note">If the current server doesn't work, please try other servers beside.</p>
+            <div class="subDub-Wrapper">
+               <div class="server-group" id="">
+                  <label>SUB:</label>
+                  <div class="buttons" id="subServers">
+                     <!-- button class="btn-srv active">HD-1</button> -->
+                  </div>
+               </div>
+               <div class="server-group" id="server-group">
+                  <label>DUB:</label>
+                  <div class="buttons" id="dubServers">
+                     <!-- <button class="btn-srv">HD-2</button>
+                        -->  
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+
+  <section class="seasons-section">
+           <div class="seasons-container">
+              <h2 class="seasoneSectionH2">Watch more seasons of this anime</h2>
+              <div id="seasons-grid" class="seasons-grid"></div>
+           </div>
+</section>
+         </div>
+         <div class="container2">
+            
+        
+         
+         <div class="episode-section">
+            <div class="episode-header">
+               <h3>List of episodes:</h3>
+               <div class="episode-filters">
+                  <select id="rangeSelect">
+                     <option value="201">EP: 1-100</option>
+                  </select>
+                  <div class="epSearchgroup">
+                     <i class="fa fa-search EpsearchIcon"></i>  
+                     <input type="text" id="epSearch" placeholder="Search the episod...">
+                  </div>
+               </div>
+            </div>
+            <div class="episode-grid" id="epGrid"></div>
+         </div>
+         </div>
+         <div class="container3">
+         <!-- WATCHING ANIME SHORT DITAILE
+            -->
+         <div id="anime-container">
+            <!-- DETAILS CARD COME FROM JS -->
+         </div>
+         </div>
+         </div>
+         
+         <!-- WATCHING ANIME SHORT DITAILE
+            END -->
+            
+         <!-- WATCHING ANIME RELATED ANIMES
+            -->
+         
+         <section class="related-anime-section">
+    <h2 class="section-title">Related Anime</h2>
+    <div id="related-list-container"></div>
+              <button class="show-more-btn" id="show-more">
+               Show More <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            
+</section>
+
+
+         
+         
+         <!-- WATCHING ANIME RELATED ANIMES
+            END -->
+         <!-- WATCHING ANIME RECOMMEND  ANIMES
+            START -->
+         <div class="recommended-anime-section">
+            <h3 class="section-title">RECOMMENDED ANIME</h3>
+            <div class="ani-grid-layout"></div>
+         </div>
+         <!-- WATCHING ANIME RECOMMEND  ANIMES
+            End -->
+            <ul class="notifications"></ul>
+            
+      </div>
+      
+
+      
+      <footer class="footer">
+         <div class="footer-top">
+            <div class="logo">XE<span>ANIME</span></div>
+            <div class="social-icons">
+               <i class="fab fa-discord"></i>
+               <i class="fab fa-facebook"></i>
+               <i class="fab fa-telegram"></i>
+            </div>
+         </div>
+         <div class="a-z-list">
+            <span>A-Z LIST</span>
+            <div class="letters">
+               <span>All</span>
+               <span>0-9</span>
+               <span>A</span>
+               <span>B</span>
+               <span>C</span>
+               <span>D</span>
+               <span>E</span>
+            </div>
+         </div>
+         <div class="footer-links">
+            <a href="#">Terms of service</a>
+            <a href="#">DMCA</a>
+            <a href="#">Join Discord</a>
+         </div>
+         <p class="copyright">© 2026 XEANIME. All Rights Reserved</p>
+      </footer>
+
+    
+      <script src="../js/watch.js"></script>
+   </body>
+</html>

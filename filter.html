@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Filter - anime </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/filter.css">
+</head>
+
+<body>
+       <header class="navbar">
+          <div class="nav-left">
+              <i class="fas fa-bars menu-toggle menuToggle"></i>
+              <div class="logo">XE<span>ANIME</span></div>
+          </div>
+          <div class="search-container">
+              <button onclick="window.location.href='/filter.html'" class="filter-btn"> <i class="fa-solid fa-filter"></i></button>
+              <input type="text" id="search-input" class="search-input" placeholder="Search anime...">
+              <div class="search-results" id="search-results"></div>
+              <i class="fa-solid fa-x search-btnX"></i>
+              <i class="fa fa-search" id="search-btn"></i>
+          </div>
+          <div class="nav-right">
+              <div class="social-icons">
+                  <i class="fab fa-discord"></i>
+                  <i class="fab fa-facebook"></i>
+                  <i class="fab fa-telegram"></i>
+              </div>
+              <div class="">
+                  <i class="fa fa-search searchIcon"></i>
+                  <i class="fa-solid fa-x searchIcon searchCloseIcon"></i>
+              </div>
+              <button class="login-btn">Login</button>
+          </div>  
+      </header>
+      <aside class="xe-sidebar" id="sidebar">
+    <div class="xe-sidebar-content">
+        <div class="xe-close-menu" id="closeBtn">
+            <i class="fa-solid fa-chevron-left"></i> Close menu
+        </div>
+        
+        <div class="xe-action-grid">
+            <div class="xe-action-item"><i class="fa-solid fa-tower-broadcast"></i><span>W.2.G</span></div>
+            <div class="xe-action-item">
+                <div class="xe-lang-switch" id="langSwitch">
+                    <span class="xe-active">EN</span><span>JP</span>
+                </div>
+                <span>English</span>
+            </div>
+            <div class="xe-action-item"><i class="fa-solid fa-shuffle"></i><span>Random</span></div>
+            <div class="xe-action-item"><i class="fa-solid fa-rss"></i><span>News</span></div>
+        </div>
+        
+        <nav class="xe-nav-list">
+            <a href="home.html" class="xe-nav-link">HOME</a>
+            <a href="#" class="xe-nav-link">Under</a>
+            <a href="#" class="xe-nav-link">Development </a>
+        </nav>
+        
+        <div class="xe-genress-section">
+            <div class="xe-genress-header" id="genressToggle">
+                <i class="fa-solid fa-chevron-down"></i> Genre
+            </div>
+            <div class="xe-genress-grid" id="genressContainer"></div>
+            <button class="xe-more-btn" id="showMoreBtn">
+                <i class="fa-solid fa-plus"></i> More
+            </button>
+        </div>
+    </div>
+</aside>
+      <div class="xe-sidebar-overlay" id="overlay"></div>
+    
+    <div class="filter-card">
+    <div class="filter-grid">
+        
+        <div class="filter-item">
+            <label>Status <span id="val-status">All</span></label>
+            <select id="status" onchange="updateLabel('status')"></select>
+        </div>
+        <div class="filter-item">
+            <label>Rated <span id="val-rated">All</span></label>
+            <select id="rated" onchange="updateLabel('rated')"></select>
+        </div>
+        
+        <div class="filter-item">
+            <label>Score <span id="val-score">All</span></label>
+            <select id="score" onchange="updateLabel('score')"></select>
+        </div>
+        <div class="filter-item">
+            <label>Season <span id="val-season">All</span></label>
+            <select id="season" onchange="updateLabel('season')"></select>
+        </div>
+        <div class="filter-item">
+            <label>Language <span id="val-language">All</span></label>
+            <select id="language" onchange="updateLabel('language')"></select>
+        </div>
+                <div class="filter-item">
+            <label>Type <span id="val-type">All</span></label>
+            <select id="type" onchange="updateLabel('type')"></select>
+        </div>
+    </div>
+
+    <div class="date-sort-container">
+        <div class="date-group">
+            <span class="date-label">Start Date</span>
+            <input type="number" id="sy" placeholder="Year">
+            <input type="number" id="sm" placeholder="Month">
+            <input type="number" id="sd" placeholder="Day">
+        </div>
+        <div class="date-group">
+            <span class="date-label">End Date</span>
+            <input type="number" id="ey" placeholder="Year">
+            <input type="number" id="em" placeholder="Month">
+            <input type="number" id="ed" placeholder="Day">
+        </div>
+        <div class="filter-item sort-box">
+            
+            <label>Sort <span id="val-sort">Default</span></label>
+            
+            <select id="sort" onchange="updateLabel('sort')"></select>
+        </div>
+    </div>
+
+    <div class="genre-section">
+        <h3>Genre</h3>
+        <div id="genre-list" class="genre-wrapper"></div>
+    </div>
+
+    <button class="filter-submit-btn" onclick="applyFilter()">Filter</button>
+    
+</div>
+
+<div class="card-anime-section">
+   <h3 class="section-title">FILTERD ANIME <span class="resultCount"><span id="ResultsEstimated">0</span> Results</span></h3>
+
+   
+   <div class="ani-grid-layout" id="FilterdAnime"></div>
+</div>
+
+
+<div id="pagination"></div>
+<div id="app" class="container">
+  <div id="pagination-container"></div>
+</div>
+
+
+      <footer class="footer">
+          <div class="footer-top">
+              <div class="logo">XE<span>ANIME</span></div>
+              <div class="social-icons">
+                  <i class="fab fa-discord"></i>
+                  <i class="fab fa-facebook"></i>
+                  <i class="fab fa-telegram"></i>
+              </div>
+          </div>
+          <div class="a-z-list">
+              <span>A-Z LIST</span>
+              <div class="letters">
+                  <span>All</span>
+                  <span>0-9</span>
+                  <span>A</span>
+                  <span>B</span>
+                  <span>C</span>
+                  <span>D</span>
+                  <span>E</span>
+                  <span>F</span>
+                  <span>G</span>
+                  <span>H</span>
+                  <span>I</span>
+                  <span>J</span>
+                  <span>K</span>
+                  <span>L</span>
+                  <span>M</span>
+                  <span>N</span>
+                  <span>O</span>
+                  <span>P</span>
+                  <span>Q</span>
+                  <span>R</span>
+                  <span>S</span>
+                  <span>T</span>
+                  <span>U</span>
+                  <span>V</span>
+                  <span>W</span>
+                  <span>X</span>
+                  <span>Y</span>
+                  <span>Z</span>
+              </div>
+          </div>
+          <div class="footer-links">
+              <a href="#">Terms of service</a>
+              <a href="#">DMCA</a>
+              <a href="#">Join Discord</a>
+          </div>
+          <p class="copyright">© 2026 XEANIME. All Rights Reserved</p>
+      </footer>
+
+<script src="../js/filter.js"></script>
+<script src="../js/app.js"></script>
+</body>
+
+</html>

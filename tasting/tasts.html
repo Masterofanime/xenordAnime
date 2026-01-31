@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>XeAnime - Streaming</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+      <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+      
+      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="../css/home.css">
+      
+
+   <!-- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) -->
+   <meta property="og:title" content="My Awesome Website" />
+   <meta property="og:description" content="Discover amazing content about technology, design, and more!" />
+   <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=Social+Preview+Image" />
+   <meta property="og:url" content="https://example.com" />
+   <meta property="og:type" content="website" />
+   <meta property="og:site_name" content="My Awesome Website" />
+   
+   <!-- Twitter Cards -->
+   <meta name="twitter:card" content="summary_large_image" />
+   <meta name="twitter:title" content="My Awesome Website" />
+   <meta name="twitter:description" content="Discover amazing content about technology, design, and more!" />
+   <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=Social+Preview+Image" />
+   <meta name="twitter:site" content="@YourTwitterHandle" />
+   
+   <!-- Favicon -->
+   <link rel="icon" href="https://via.placeholder.com/32.png?text=F" />
+   </head>
+   <body>
+      <header class="navbar">
+         <div class="nav-left">
+            <i class="fas fa-bars menu-toggle menuToggle"></i>
+            <div class="logo">XE<span>ANIME</span></div>
+         </div>
+         <div class="search-container">
+           <button onclick="window.location.href='/filter.html'" class="filter-btn"> <i class="fa-solid fa-filter"></i></button>
+            <input type="text" id="search-input" class="search-input" placeholder="Search anime...">
+            <div class="search-results" id="search-results"></div>
+            <i class="fa-solid fa-x search-btnX"></i>
+            <i class="fa fa-search" id="search-btn"></i>
+         </div>
+         <div class="nav-right">
+            <div class="social-icons">
+               <i class="fab fa-discord"></i>
+               <i class="fab fa-facebook"></i>
+               <i class="fab fa-telegram"></i>
+            </div>
+            <div class="">
+               <i class="fa fa-search searchIcon"></i>
+               <i class="fa-solid fa-x searchIcon searchCloseIcon"></i>
+            </div>
+            <button class="login-btn">Login</button>
+         </div>
+         
+
+
+
+      </header>
+      
+            <aside class="xe-sidebar" id="sidebar">
+          <div class="xe-sidebar-content">
+              <div class="xe-close-menu" id="closeBtn">
+                  <i class="fa-solid fa-chevron-left"></i> Close menu
+              </div>
+              
+              <div class="xe-action-grid">
+                  <div class="xe-action-item"><i class="fa-solid fa-tower-broadcast"></i><span>W.2.G</span></div>
+                  <div class="xe-action-item">
+                      <div class="xe-lang-switch" id="langSwitch">
+                          <span class="xe-active">EN</span><span>JP</span>
+                      </div>
+                      <span>English</span>
+                  </div>
+                  <div class="xe-action-item"><i class="fa-solid fa-shuffle"></i><span>Random</span></div>
+                  <div class="xe-action-item"><i class="fa-solid fa-rss"></i><span>News</span></div>
+              </div>
+              
+<nav class="xe-nav-list">
+  <a class="xe-nav-link" href="/anime/top-airing">Top Airing</a>
+  <a class="xe-nav-link" href="/anime/most-popular">Most Popular</a>
+  <a class="xe-nav-link" href="/anime/movie">Movies</a>
+  <a class="xe-nav-link" href="/home.html">HOME</a>
+  <a class="xe-nav-link" href="#">Under</a>
+  <a class="xe-nav-link" href="#">Development</a>
+</nav>
+              
+              <div class="xe-genress-section">
+                  <div class="xe-genress-header" id="genressToggle">
+                      <i class="fa-solid fa-chevron-down"></i> Genre
+                  </div>
+                  <div class="xe-genress-grid" id="genressContainer"></div>
+                  <button class="xe-more-btn" id="showMoreBtn">
+                      <i class="fa-solid fa-plus"></i> More
+                  </button>
+              </div>
+          </div>
+      </aside>
+      <div class="xe-sidebar-overlay" id="overlay"></div>
+       <!-- LOADER -->
+  <div id="page-loader">
+    <h1 class="site-title">
+      <span class="accent">XE</span>ANIME
+    </h1>
+    <span class="xe-loader"></span>
+  </div>
+
+      <div id="app" class="app-hidden">
+  <!-- main content -->
+    <section class="hero-section">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper" id="spotlight-wrapper"></div>
+            <div class="swiper-pagination hero-pagination"></div>
+        </div>
+    </section>
+
+        <section class="az-trending-container">
+            <div class="az-section-header">
+                <h2 class="az-section-title">Trending</h2>
+                <div class="az-trending-nav">
+                    <i class="fa-solid fa-chevron-left az-prev"></i>
+                    <i class="fa-solid fa-chevron-right az-next"></i>
+                </div>
+            </div>
+            <div class="swiper az-trending-swiper">
+                <div class="swiper-wrapper" id="az-trending-wrapper"></div>
+            </div>
+        </section>
+
+
+      
+      
+<!-- <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="swiper-wrapper"></div>
+        <div class="swiper-pagination"></div>
+    </div> -->
+    <!-- ANIME LIST  -->
+    <div class="AnimeList-container">
+    <div class="section-header">
+        <h2>TOP AIRING</h2>
+        </div>
+    <div id="TopAiringContainer"></div>
+</div>
+    
+    <!-- MAIN LATEST SECTION -->
+    
+    
+<div class="card-anime-section">
+   <h3 class="section-title">LATEST EPISODES</h3>
+   <div class="ani-grid-layout" id="LatestEpisodes"></div>
+</div>
+
+
+
+<!-- recenty add section -->
+<div class="card-anime-section">
+   <h3 class="section-title">New On Xeanime</h3>
+   <div class="ani-grid-layout" id="NewOnXeanime"></div>
+</div>
+
+    <!-- ANIME LIST  -->
+    <div class="AnimeList-container">
+       <div class="section-header">
+          <h2>MOST POPULAR</h2>
+       </div>
+       <div id="MostPopular"></div>
+    </div>
+        <!-- ANIME LIST  -->
+    <div class="AnimeList-container">
+       <div class="section-header">
+          <h2>MOST FAVORITE</h2>
+       </div>
+       <div id="MostFavorite"></div>
+    </div>
+        <!-- ANIME LIST  -->
+    <div class="AnimeList-container">
+       <div class="section-header">
+          <h2>LATEST COMPLETED</h2>
+       </div>
+       <div id="LatestCompleted"></div>
+    </div>
+
+      </div>
+      <ul class="notifications"></ul>
+      <footer class="footer">
+         <div class="footer-top">
+            <div class="logo">XE<span>ANIME</span></div>
+            <div class="social-icons">
+               <i class="fab fa-discord"></i>
+               <i class="fab fa-facebook"></i>
+               <i class="fab fa-telegram"></i>
+            </div>
+         </div>
+         <div class="a-z-list">
+            <span>A-Z LIST</span>
+            <div class="letters">
+               <span>All</span>
+               <span>0-9</span>
+              <span>A</span>
+<span>B</span>
+<span>C</span>
+<span>D</span>
+<span>E</span>
+<span>F</span>
+<span>G</span>
+<span>H</span>
+<span>I</span>
+<span>J</span>
+<span>K</span>
+<span>L</span>
+<span>M</span>
+<span>N</span>
+<span>O</span>
+<span>P</span>
+<span>Q</span>
+<span>R</span>
+<span>S</span>
+<span>T</span>
+<span>U</span>
+<span>V</span>
+<span>W</span>
+<span>X</span>
+<span>Y</span>
+<span>Z</span>
+            </div>
+         </div>
+         <div class="footer-links">
+            <a href="#">Terms of service</a>
+            <a href="#">DMCA</a>
+            <a href="#">Join Discord</a>
+         </div>
+         <p class="copyright">© 2026 XEANIME. All Rights Reserved</p>
+      </footer>
+
+      
+
+      <script src="../js/app.js"></script>
+      <script src="../js/home.js"></script>
+            <!-- Swiper JS -->
+      <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+   </body>
+</html>

@@ -1,0 +1,603 @@
+
+      body {
+        margin: 0;
+        font-family: 'Outfit', 'Poppins', sans-serif;
+        background-color: var(--bg-dark);
+        color: white;
+        overflow-x: hidden;
+      }
+      
+
+/* --- MAIN CONTENT --- */
+/* .container {
+	max-width: 1000px;
+	margin: 0px auto 20px;
+	padding: 0 15px;
+} */
+
+.video-section {
+	width: 100%;
+	margin-bottom: 1rem;
+	background: #000;
+	position: relative;
+
+}
+
+.aspect-ratio-box {
+	background: #000;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+}
+
+.aspect-ratio-box iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+	z-index: 999;
+}
+
+.wrapper-container {
+	max-width: 1000px;
+	/* Limits width on desktop */
+	margin: 0 auto;
+	/* Centers the content */
+	padding: 0 15px;
+	/* Gives breathing room on mobile */
+}
+
+.loader {
+	border: 4px solid #333;
+	border-top: 4px solid var(--accent);
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	animation: spin 1s linear infinite;
+position: absolute;
+top: 50%;
+
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.video-controls-bar {
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 0;
+	font-size: 0.85rem;
+	border-bottom: 2px solid var(--accent);
+	background: rgba(255, 255, 255, 0.02);
+	overflow-x: auto;
+	white-space: nowrap;
+	flex-wrap: nowrap;
+}
+
+.toggle-on {
+	color: var(--accent);
+	font-weight: bold;
+	margin-right: 2px;
+}
+
+.video-controls-bar span {
+	margin-left: 1rem;
+}
+
+.server-selection {
+	text-align: center;
+	padding: 20px 0;
+}
+
+.status-msg span {
+	color: var(--accent);
+	font-weight: bold;
+}
+
+.server-note {
+	color: var(--text-dim);
+	font-size: 0.8rem;
+	margin-bottom: 20px;
+}
+
+.subDub-Wrapper {
+	overflow: hidden;
+	display: flex;
+	height: auto;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	width: 30%;
+	background-color: var(--bg-accent);
+	border-radius: 0 0 5px 5px;
+}
+
+.server-group {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+	border-top: 0.5px dashed var(--border-color);
+	padding: 10px;
+}
+
+.server-group:first-child {
+	border: none;
+}
+
+.server-group label {
+	min-width: 60px;
+	font-weight: bold;
+	font-size: 0.9rem;
+}
+
+.buttons {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.epSearchgroup {
+	display: flex;
+	position: relative;
+	align-items: center;
+}
+
+.EpsearchIcon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	transform: translateY(5px);
+	color: var(--text-dim);
+	margin-right: 5px;
+}
+
+.btn-srv {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background-color: var(--card-bg);
+	/* Using your variable */
+	color: var(--text-main);
+	border: none;
+	padding: 6px 14px;
+	margin: 5px;
+	/* Adds space between the server buttons */
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.9rem;
+	transition: 0.2s ease-in-out;
+}
+
+.btn-srv:hover {
+	background-color: var(--accent);
+	transform: scale(1.05);
+}
+
+.btn-srv i {
+	color: var(--text-dim);
+	font-size: 0.7rem;
+}
+
+.btn-srv:hover i {
+	color: var(--text-main);
+}
+
+.btn-srv.active {
+	background: var(--accent);
+}
+
+
+/* Styling for when the button is disabled */
+.btn-nav:disabled {
+	background-color: var(--card-bg);
+	color: var(--text-dim);
+	border-color: var(--text-dim);
+	cursor: not-allowed;
+	opacity: 0.5;
+	transform: none;
+	/* Prevents hover jump effect */
+}
+
+/* Ensure Font Awesome icons inside disabled buttons also dim */
+.btn-nav:disabled i {
+	color: var(--text-dim);
+}
+
+
+.privNext {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 15px 0;
+	box-sizing: border-box;
+	margin-top: -2rem;
+}
+
+.btn-nav {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	/* Space between icon and text */
+
+	background-color: var(--card-bg);
+	color: var(--text-main);
+	border: 1px solid var(--accent);
+	padding: 8px 16px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: all 0.3s ease;
+}
+
+/* Hover state using your accent color */
+.btn-nav:hover {
+	background-color: var(--accent);
+	color: var(--text-main);
+}
+
+/* Icon specific sizing */
+.btn-nav i {
+	font-size: 0.8rem;
+}
+
+/* --- EPISODE GRID --- */
+.episode-section {
+	background: var(--card-bg);
+	border-radius: 8px;
+	/* margin: 0 auto;
+	  height: 100%; */
+
+
+}
+
+.episode-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 10px;
+	background-color: var(--bg-black);
+	border-top: 0.5px dashed var(--border-color);
+
+}
+
+.episode-header h3 {
+	padding: 0;
+	margin: 0;
+}
+
+.episode-filters {
+	display: flex;
+	gap: 10px;
+}
+
+.episode-filters select,
+.episode-filters input {
+	background: #2a2a35;
+	border: 1px solid #444;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 4px;
+}
+
+.episode-grid {
+	padding: 5px 15px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+	gap: 8px;
+	height: 20rem;
+	overflow-y: auto;
+	
+}
+
+.ep-btn {
+	background: #2a2a35;
+	padding: 10px;
+	text-align: center;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.85rem;
+	transition: 0.2s;
+}
+
+.ep-btn:hover {
+	background: #3a3a4a;
+}
+
+.ep-btn.active {
+	background: var(--accent);
+	color: white;
+	font-weight: bold;
+
+}
+
+.ep-btn.fillerEp {
+	border: 0.5px dashed var(--accent-dark);
+}
+#epSearch.Unactivated,.EpsearchIcon.Unactivated{
+	display: none;
+}
+
+.ep-btn.highlight-search {
+	border: 2px solid var(--accent);
+	background-color: var(--accent-vlight);
+}
+
+#related-counter{
+	text-align: center;
+	padding: 10px 0;
+}
+
+/* The Container */
+.episode-grid.UnderGrid {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    padding: 0; 
+    height: auto; 
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+    background-color: var(--bg-dark); /* Dark theme background */
+}
+
+/* The Button */
+.episode-grid.UnderGrid .ep-btn.highlight {
+	
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align text to the left */
+    padding: 15px 20px;
+    margin: 0;
+    border-radius: 0; /* Square edges look better in a list */
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+}
+
+
+/* Zebra Striping (Alternating Colors) */
+.episode-grid.UnderGrid .ep-btn.highlight:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.03); /* Slightly lighter */
+}
+
+/* Hover State */
+.episode-grid.UnderGrid .ep-btn.highlight:hover {
+    background-color: var(--accent-vlight);
+    color: white;
+}
+
+/* Matching the "Episode 1" purple color from your image */
+.episode-grid.UnderGrid .ep-btn.highlight.active {
+    color: var(--accent);
+    background-color: var(--active-light);
+}
+
+
+/* video player toggle */
+
+.toggle-on {
+	color: var(--accent);
+	/* Green */
+	margin-left: 5px;
+}
+
+.toggle-off {
+	color: #f44336;
+	/* Red */
+	margin-left: 5px;
+}
+
+
+
+/* WATCHING ANIME SHORT DETAILS STARTS */
+
+#anime-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* width: 100%; */
+	background-color: var(--bg-dark);
+	padding: 0;
+	/* margin: 2rem auto 2rem; */
+
+}
+
+
+.anime-card {
+	background-color: var(--card-bg);
+	border-radius: 5px;
+	padding: 20px 10px;
+	margin: 10px;
+	max-width: 600px;
+	color: var(--text-main);
+	border: 0.5px solid var(--accent);
+}
+
+.card-content {
+	display: flex;
+	gap: 20px;
+}
+
+.poster-container img {
+	width: 100px;
+	height: 140px;
+	object-fit: cover;
+	border-radius: 4px;
+}
+
+.info-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.title {
+	font-size: 1.4rem;
+	margin: 0;
+	font-weight: 600;
+}
+
+.badges {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	font-weight: 300;
+}
+
+.badge {
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 0.75rem;
+	font-weight: bold;
+	color: #000;
+}
+
+.rating {
+	background: #fff;
+}
+
+.lang-tag {
+	background: var(--accent);
+	color: #fff;
+}
+
+.sub-count {
+	background: var(--purple-cc);
+	color: #fff;
+}
+
+.dub-count {
+	background: var(--gold-dub);
+}
+
+.type {
+	color: var(--text-dim);
+	border: 1px solid var(--text-dim);
+}
+
+.duration {
+	color: var(--text-dim);
+	font-size: 0.85rem;
+}
+
+.synopsis {
+	font-size: 0.9rem;
+	color: var(--text-dim);
+	line-height: 1.4;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	/* Limits text height like the image */
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	margin: 5px 0;
+}
+
+.view-detail {
+	background-color: #fff;
+	color: #000;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 20px;
+	font-weight: 600;
+	cursor: pointer;
+	width: fit-content;
+	margin-top: 10px;
+	transition: opacity 0.2s;
+}
+
+.view-detail:hover {
+	background-color: var(--accent);
+}
+
+
+/* WATCHING ANIME SHORT DETAILS END */
+
+
+
+
+
+
+
+@media (min-width: 1024px) {
+
+  /* MAIN 3-COLUMN LAYOUT */
+  .containers-wrapper {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-areas: "left center right";
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 20px;
+    gap: 0; /* NO GAPS */
+    align-items: stretch; /* SAME HEIGHT */
+  }
+
+  /* CENTER – VIDEO */
+  .container {
+    grid-area: center;
+    height: calc(100vh - 70px); /* navbar height */
+    overflow-y: auto;
+  }
+
+  /* LEFT – EPISODES */
+  .container2 {
+    grid-area: left;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* RIGHT – DETAILS */
+  .container3 {
+    grid-area: right;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    border-left: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* REMOVE AUTO MARGINS THAT BREAK HEIGHT */
+  .container,
+  .container2,
+  .container3 {
+    margin: 0;
+    height: 100%;
+  }
+  .episode-grid{
+  	height: 100%;
+  }
+.container {
+  overflow: hidden;
+  height: 100%;
+}
+.video-section {
+  flex-shrink: 0;
+}
+
+.aspect-ratio-box {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  overflow: hidden;
+}
+}
