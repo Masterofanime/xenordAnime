@@ -77,6 +77,57 @@
       h1{
       	font-family: 'Poppins', 'Outfit', sans-serif;
       }
+      /* GLOBAL 404 CARD CSS */
+      .anime-error-box {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid #C1C1C1BA;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+    margin: 20px auto;
+    font-family: sans-serif;
+    color: #fff;
+  }
+
+  .anime-error-box img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    /* Makes the meme pop */
+    filter: drop-shadow(0 0 8px var(--accent));
+  }
+
+  .anime-error-box h1 {
+    font-size: 3rem;
+    margin: 0;
+    color: var(--accent);
+  }
+
+  .anime-error-box p {
+    color: #a0a0a0;
+    margin: 10px 0 20px;
+  }
+
+  .anime-error-box a {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: #1A1A2E;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.2s ease;
+  }
+
+  .anime-error-box a:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+      
+      
+      
       
       /* --- NAVBAR --- */
       .navbar {
@@ -1254,7 +1305,7 @@
       background-position: center;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: transform 0.2s;
-      filter: brightness(0.3) ;
+      filter: brightness(0.5) ;
     }
 
     /* Dark overlay logic from your code */

@@ -1000,8 +1000,8 @@ if (!animeId || animeId === 'null' || animeId === 'undefined') {
   
   // Delay redirect by 3 seconds so the user can see the notification
   setTimeout(() => {
-    window.location.href = 'home.html'; // Change to '404.html' if you have one
-  }, 3000);
+  window.location.href = 'home.html'; // Change to '404.html' if you have one
+}, 3000);
   
   // Stop all further code execution
   if (epGrid) epGrid.innerHTML = '<div class="no-results">Invalid Anime ID. Redirecting...</div>';
@@ -1059,8 +1059,11 @@ if (!animeId || animeId === 'null' || animeId === 'undefined') {
          await loadEpisodeServers(activeEpObj.id);
          
          // Update the UI (Display current ep number and trigger player load)
+        
          updateUI();
          hidePageLoader();
+         
+         
       }
 
       // 3. --- LOAD ANIME DETAILS & RELATED ---
