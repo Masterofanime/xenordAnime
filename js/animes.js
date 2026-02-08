@@ -2,7 +2,7 @@
   /* =====================
    CONFIG
 ===================== */
-  const API_BASE = "https://animo.qzz.io/api/v1";
+  const API_BASE = "https://xeanime.vercel.app/api/v1";
   const TitelChange = document.querySelector('.SearchAnT');
   let currentType =
     new URLSearchParams(window.location.search).get("type") || "top-airing";
@@ -14,16 +14,18 @@
     try {
       const res = await fetch(`${API_BASE}/animes/${currentType}?page=${page}`);
       const data = await res.json();
-      
+      console.log(hidePageLoader())
+      hidePageLoader();
       console.log(data);
       TitelChange.textContent= currentType;
       const animeList = data.data.response;
       const pageInfo = data.data.pageInfo;
       
+      
       renderAnimeSection(animeList);
       renderPagination(pageInfo);
       estimatedResult(pageInfo,animeList)
-      
+   
       // ✅ Update result count
        function estimatedResult(page,length) {
   document.getElementById("ResultsEstimated").textContent = page.totalPages * length.length;
@@ -100,6 +102,7 @@
       } else if (range[range.length - 1] !== "...") {
         range.push("...");
       }
+      
     }
     
     ul.appendChild(createPgBtn("chevron-left", currentPage > 1, currentPage - 1));
@@ -137,7 +140,7 @@
      INIT
   ===================== */
   document.addEventListener("DOMContentLoaded", () => {
-    hidePageLoader();
     loadAnime(1);
+    
     
   });

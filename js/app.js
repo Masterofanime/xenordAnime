@@ -51,6 +51,11 @@ window.addEventListener('scroll', () => {
 // --- SECTION END: Navigation & Navbar ---
 
 
+// logo go to home page
+document.querySelector('.logo').addEventListener('click', () => {
+    window.location.href = 'home.html';
+});
+
 // SIDEBAR LOGIC
 
         const genress = ["action", "adventure", "cars", "comedy", "dementia", "demons", "mystery", "drama", "ecchi", "fantasy", "game", "historical", "horror", "kids", "magic", "martial_arts", "mecha", "music", "parody", "samurai", "romance", "school", "sci-fi", "shoujo", "shoujo_ai", "shounen", "shounen_ai", "space", "sports", "super_power", "vampire", "harem", "slice_of_life", "supernatural", "military", "police", "psychological", "thriller", "seinen", "josei", "isekai"];
@@ -245,8 +250,6 @@ const toggleMobileSearch = () => {
 searchBtn.addEventListener('click', toggleMobileSearch);
 CloseBtn.addEventListener('click', toggleMobileSearch);
 // --- SECTION END: Mobile Search UI Toggle ---
-
-
 
 
 // IMAGE LAYZE CUSTOM LOADER JS START

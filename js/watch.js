@@ -55,6 +55,8 @@ const infoPageUrl = 'watch.html';
 // GLOBAL STATE
 
 const BASE_API = 'https://xeanime.vercel.app/api/v1';
+const BcApi = BASE_API;
+
 const API_BASE = BASE_API;
 
 
@@ -422,8 +424,8 @@ const showEptitel = async () => {
       language = 'sub';
     }
     
-    const embedUrl = `${BASE_API}/embed/${serverType}/${currentEpid}/${language}`;
-    player.innerHTML = `<iframe src="${embedUrl}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`;
+    const embedUrl = `${BcApi}/embed/${serverType}/${currentEpid}/${language}`;
+    player.innerHTML = `<iframe src="${embedUrl}" id="playerFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`;
     
     console.log('Current Episode ID:', currentEpid, 'Server:', serverType, 'Language:', language);
   }, 300);
@@ -987,7 +989,10 @@ function hidePageLoader() {
   }
 }
 
-
+// logo go to home page
+document.querySelector('.logo').addEventListener('click', () => {
+  window.location.href = 'home.html';
+});
 
 // --- SECTION START: Initialization ---
 async function init() {
@@ -1111,3 +1116,63 @@ if (!animeId || animeId === 'null' || animeId === 'undefined') {
 // Run on load
 window.onload = init;
 // --- SECTION END: Initialization ---
+
+// const iframe = document.getElementById("playerFrame");
+
+//   /* =====================================================
+//     SEND AUTO SKIP SETTING TO IFRAME
+//     ===================================================== */
+
+//   let autoSkipIntroOutro = true; // parent control
+
+//   function setAutoSkip(value) {
+//     autoSkipIntroOutro = !!value;
+
+//     iframe.contentWindow.postMessage(
+//       {
+//         type: "SET_AUTO_SKIP",
+//         value: autoSkipIntroOutro
+//       },
+//       "*"
+//     );
+
+//     console.log("Auto skip sent to iframe:", autoSkipIntroOutro);
+//   }
+
+//   // Example usage
+//   setAutoSkip(true);   // enable
+//   // setAutoSkip(false); // disable
+
+
+//   /* =====================================================
+//     RECEIVE EVENTS FROM IFRAME
+//     ===================================================== */
+
+//   window.addEventListener("message", (event) => {
+//     // OPTIONAL SECURITY CHECK
+//     // if (event.origin !== "https://your-embed-domain.com") return;
+
+//     const data = event.data;
+
+//     if (!data || typeof data !== "object") return;
+
+//     /* ---------- VIDEO ENDED ---------- */
+//     if (data.type === "VIDEO_ENDED") {
+//       console.log("Parent received VIDEO_ENDED");
+//       console.log("Video ID:", data.videoId);
+
+//       // 👉 example actions
+//       // playNextEpisode();
+//       // showRecommendation();
+//       // markAsWatched(data.videoId);
+//     }
+//   });
+
+//   /* =====================================================
+//     OPTIONAL HELPERS
+//     ===================================================== */
+
+//   function playNextEpisode() {
+//     console.log("Play next episode");
+//     // change iframe src to next video
+//   }

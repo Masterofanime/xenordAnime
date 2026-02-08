@@ -1,0 +1,420 @@
+
+
+:root {
+
+    /* Mapping old variables to new ones for compatibility */
+    --bg-body: var(--bg-dark);
+    --bg-green: var(--accent);
+    --color-white: var(--text-main);
+    --color-gray1: var(--text-dim);
+    --color-gray2: var(--text-dim);
+    --color-green1: var(--accent);
+    --color-orange: var(--gold-dub);
+    --ff-main: 'Outfit', sans-serif;
+    --fs-10: 10px; --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px;
+    --fs-15: 15px; --fs-16: 16px; --fs-17: 17px; --fs-18: 18px; --fs-19: 19px; --fs-20: 20px;
+    --fw-100: 100; --fw-200: 200; --fw-300: 300; --fw-400: 400; --fw-500: 500;
+    --fw-600: 600; --fw-700: 700; --fw-800: 800; --fw-900: 900;
+}
+
+/* CUSTOM CLASS */
+.margin-default {
+    margin: 0.85rem;
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Poppins', 'Outfit', sans-serif;
+}
+body.menu-open {
+    overflow: hidden;
+    height: 100vh;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--color-white);
+    font-size: var(--fs-14);
+    font-family: var(--ff-main);
+    overflow-x: hidden;
+}
+/* Search Input Wrapper */
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.arrow-right{
+    margin-left: 1rem;
+}
+/* Clear (X) Button in Input */
+.clear-btn {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: none; /* Hidden by default */
+}
+
+.clear-btn.active {
+    display: block;
+}
+
+/* Search Results Dropdown */
+.search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    z-index: 2000;
+    display: none;
+    max-height: 450px;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Individual Result Item */
+.search-result-item {
+    display: flex;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--text-main);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+}
+
+.search-result-item:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.search-result-image {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.search-result-title {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.search-result-info {
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+/* Loader Animation */
+.search-loader-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.dots {
+    display: flex;
+    gap: 5px;
+}
+
+.dots div {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+}
+
+@keyframes dotGrowing {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
+
+/* Ensure container is relative for dropdown positioning */
+.search-container {
+    position: relative;
+}
+
+/* NAVIGATION */
+nav {
+    font-size: calc(var(--fs-11) + 0.4px);
+    height: 1rem;
+    padding: 0.8rem 0.5rem 1.2rem;
+    margin: 1rem 1rem 1rem;
+}
+
+nav p { font-size: calc(var(--fs-10) + 0.75px); }
+
+nav a {
+    display: flex;
+    align-items: baseline;
+    color: var(--color-white);
+    text-decoration: none;
+    width: fit-content;
+}
+
+nav a i { padding-right: 0.4rem; font-size: calc(var(--fs-11) + 0.4px); }
+
+nav ul { display: none; }
+
+nav ul.show {
+    position: relative;
+    top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--glass-sidebar);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 22px;
+    padding: 1rem 0;
+    margin: 0 -0.6rem;
+}
+
+nav ul a:hover { color: var(--color-green1); }
+
+nav ul li {
+    list-style: none;
+    padding: 0.78rem ;
+    font-size: var(--fs-15);
+    font-weight: var(--fw-500);
+}
+
+nav a.active { color: var(--color-green1); }
+/* TOP CONTENT - Image Removed */
+/* TOP CONTENT - Image Restored */
+.top-content {
+    /* The gradient creates a "fade to black" effect at the bottom */
+    background: linear-gradient(
+        to bottom, 
+        rgba(26, 26, 46, 0.4) 0%, 
+        var(--bg-dark) 95%
+    ), url('/images/nav-bg.jpg');
+    
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    
+    width: 100%;
+    height: auto;
+    min-height: 380px; /* Slightly taller to show more of the art */
+    margin-bottom: 1rem;
+    padding: 0 0.1rem;
+    display: flex;
+    flex-direction: column;
+}
+/* Navigation Overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dims the background */
+    z-index: 999; /* Just below the sidebar (1000) */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+/* When the menu is active */
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Also ensure the character side image is visible on larger screens if desired */
+@media screen and (min-width: 703px) {
+    .zoro-side-img {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 5%;
+        
+        z-index: 1;
+        pointer-events: none; /* So it doesn't block clicks */
+    }
+}
+
+.logoText {
+    font-size: 3rem;
+    text-decoration: none;
+    color: var(--bg-green);
+    font-weight: bolder;
+}
+
+.xetext {
+    color: var(--text-main)!important;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.6rem 7rem 0;
+}
+
+.search-container {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    margin: 1.7rem 0.85rem 0;
+}
+
+.search-container input {
+    width: 100%;
+    height: 2.8rem;
+    border-radius: 50px;
+    border: none;
+    padding: 1rem;
+    outline: none;
+    font-size: var(--fs-14);
+    font-family: var(--ff-main);
+    margin-right: 0.6rem;
+}
+
+.search-container i {
+    width: 2.8rem;
+    height: 2.8rem;
+    background: var(--bg-green);
+    border-radius: 50px;
+    color: #000;
+    line-height: 45px;
+}
+
+.top-search-recommendation {
+    padding: 0 0.4rem;
+    font-weight: var(--fw-300);
+    text-align: left;
+    line-height: 1.2rem;
+    margin-top: 1.65rem;
+    padding-bottom: 3rem;
+}
+
+.top-search-recommendation p {
+    color: var(--color-white);
+    font-weight: var(--fw-500);
+    font-size: calc(var(--fs-12) + 0.7px);
+}
+
+.top-search-recommendation p a {
+    display: inline-block;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: calc(var(--fs-12) + 0.5px);
+    margin-right: 5px;
+}
+
+.top-search-recommendation a:hover { color: var(--color-green1); }
+
+.home-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-green);
+    height: 3.25rem;
+    border-radius: 50px;
+    margin-top: -2.5rem;
+}
+
+.home-btn a {
+    color: #000;
+    text-decoration: none;
+    font-size: var(--fs-16);
+    font-weight: var(--fw-600);
+}
+
+/* MIDDLE CONTENT */
+.share-box {
+    background-color: var(--bg-black);
+    border-radius: 10px;
+    padding: 0.7rem 0.8rem 1.4rem;
+    margin-top: 2.7rem;
+}
+
+.share-box p:first-child { color: var(--color-green1); font-weight: var(--fw-600); }
+
+/* BOTTOM CONTAINER - CENTERED */
+.bottom-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Ensures text inside follows center alignment */
+    width: 100%;
+}
+
+.zoro-information {
+    margin-top: 1.5rem;
+    max-width: 800px; /* Constrains width for better readability while centered */
+}
+
+.zoro-information h1, .zoro-information h2 {
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.zoro-information p {
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.zoro-information ul {
+    list-style-position: inside;
+    text-align: left;
+    display: inline-block; /* Allows the list to be centered as a block */
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+}
+
+footer a { color: var(--accent); }
+
+/* RESPONSIVE */
+@media screen and (min-width: 703px) {
+    .search-container { width: 52.5vw; margin-inline: auto; }
+}
+@media screen and (max-width: 702px) {
+    nav ul {
+        z-index: 1000;
+
+        background-color: var(--bg-dark); 
+        backdrop-filter: none !important;
+        border-right: 1px solid var(--border-color);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+
+        /* Animation Logic */
+        transform: translateX(-100%);
+        visibility: hidden;
+        pointer-events: none;
+        
+        /* Transition - Match the transform and visibility timings */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+        will-change: transform; /* Helps browser optimize the slide */
+    }
+
+    nav ul.show {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
+        /* Keep height consistent */
+        top: 0;
+    }
+}

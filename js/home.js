@@ -1,4 +1,4 @@
-        let API_BASE = "https://api.animo.qzz.io/api/v1";
+        let API_BASE = "https://animo.qzz.io/api/v1";
 // const infoPageUrl = "/details";
 
 const grid = document.querySelector(".ani-grid-layout");
