@@ -1,6 +1,6 @@
 const animeId = new URLSearchParams(window.location.search).get("id")//||'jack-of-all-trades-party-of-none-20333';
 
-const API_BASE = "https://animo.qzz.io/api/v1";
+const API_BASE = "https://xeanime.vercel.app/api/v1";
 
 let animeDet = null;
 

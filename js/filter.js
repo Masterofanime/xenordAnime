@@ -1,4 +1,4 @@
-const API_BASE = "https://animo.qzz.io/api/v1";
+const API_BASE = "https://xeanime.vercel.app/api/v1";
 let selectedGenres = [];
 const pageCache = new Map();
 const searchCache = new Map(); // cache for search results
