@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - XeAnime</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-black);
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text-main);
+        }
+
+        .login-wrapper { width: 100%; max-width: 440px; }
+
+        .login-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* Profile Specific Styles */
+        .profile-card { text-align: center; }
+        .avatar-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+        .user-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            padding: 3px;
+            background: var(--bg-black);
+        }
+
+        .brand-title { font-size: 28px; margin: 0 0 8px 0; color: var(--accent); font-weight: 700; }
+        .brand-subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 30px; }
+
+        .form-group { margin-bottom: 18px; text-align: left; }
+        .form-label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 500; color: var(--text-dim); }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: white;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
+
+        .form-input:focus { 
+            border-color: var(--accent); 
+            outline: none;
+            background: rgba(var(--accent-rgb) / 0.05);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled { background: #444; color: #888; cursor: not-allowed; }
+
+        .logout-btn { 
+            background: transparent; 
+            border: 1px solid var(--error); 
+            color: var(--error); 
+            margin-top: 25px;
+        }
+        .logout-btn:hover { background: var(--error); color: white; }
+
+        .switch-text { text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-dim); }
+        .switch-text a { color: var(--accent); text-decoration: none; cursor: pointer; font-weight: 600; }
+
+        /* Status Badges */
+        .user-info-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    
+
+<div class="login-wrapper">
+    <div class="login-container" id="login-section">
+        <h1 class="brand-title">Welcome Back</h1>
+        <p class="brand-subtitle">Enter your details to access your list</p>
+        <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="login-email" class="form-input" placeholder="name@email.com">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-input" placeholder="••••••••">
+        </div>
+        <button class="submit-btn" id="loginBtn" onclick="loginUser()">Sign In</button>
+        <p class="switch-text">Don't have an account? <a onclick="showSection('register-section')">Join XeAnime</a></p>
+    </div>
+
+    <div class="login-container" id="register-section" style="display:none;">
+        <h1 class="brand-title">Create Account</h1>
+        <p class="brand-subtitle">Join the community today</p>
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="reg-name" class="form-input" placeholder="AnimeLover99">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="reg-email" class="form-input" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="reg-password" class="form-input" placeholder="Min. 6 characters">
+        </div>
+        <button class="submit-btn" id="regBtn" onclick="registerUser()">Create Account</button>
+        <p class="switch-text">Already a member? <a onclick="showSection('login-section')">Log in here</a></p>
+    </div>
+
+    <div class="login-container profile-card" id="profile-section" style="display:none;">
+        <div class="avatar-container">
+            <img src="/images/share-icon.gif" alt="Avatar" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=49F1B0&color=000'">
+        </div>
+        <h1 class="brand-title" id="display-name">...</h1>
+        <p class="brand-subtitle" id="display-email">...</p>
+        
+        <div class="user-info-box">
+            <div style="font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Member Status</div>
+            <div style="font-weight: 600;">Standard Otaku</div>
+        </div>
+  <button class="submit-btn go-to-home">Go To Home</button>
+        <button class="submit-btn logout-btn" onclick="logoutUser()">Log Out</button>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDfyoYffmAIc-X0G1jHjXjdynnh2G43OeA",
+        authDomain: "xeanime-be95d.firebaseapp.com",
+        projectId: "xeanime-be95d",
+        storageBucket: "xeanime-be95d.firebasestorage.app",
+        messagingSenderId: "74183012519",
+        appId: "1:74183012519:web:488ff3ba2f8b0e22bfab82"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Navigation
+    window.showSection = (id) => {
+        ['login-section', 'register-section', 'profile-section'].forEach(s => {
+            document.getElementById(s).style.display = s === id ? 'block' : 'none';
+        });
+    };
+document.querySelector('.go-to-home').addEventListener('click',()=>{
+    window.location.href ='home.html';
+});
+    // Registration Logic
+    window.registerUser = async () => {
+        const btn = document.getElementById('regBtn');
+        const name = document.getElementById('reg-name').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-password').value;
+
+        if(!name || !email || !password) return alert("Please fill all fields");
+
+        btn.disabled = true;
+        btn.innerText = "Creating...";
+        try {
+            const cred = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, "users", cred.user.uid), { 
+                username: name, 
+                email: email,
+                createdAt: new Date()
+            });
+        } catch (e) { 
+            alert(e.message); 
+            btn.disabled = false;
+            btn.innerText = "Create Account";
+        }
+    };
+
+    // Login Logic
+    window.loginUser = async () => {
+        const btn = document.getElementById('loginBtn');
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        if(!email || !password) return alert("Please fill all fields");
+
+        btn.disabled = true;
+        btn.innerText = "Signing in...";
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (e) { 
+            alert("Login failed: " + e.message); 
+            btn.disabled = false;
+            btn.innerText = "Sign In";
+        }
+    };
+
+    window.logoutUser = () => signOut(auth);
+
+    // Auth State Observer
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            showSection('profile-section');
+            const snap = await getDoc(doc(db, "users", user.uid));
+            if (snap.exists()) {
+                document.getElementById('display-name').innerText = snap.data().username;
+                document.getElementById('display-email').innerText = user.email;
+            }
+        } else {
+            showSection('login-section');
+            // Clear inputs on logout
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.getElementById('loginBtn').disabled = false;
+            document.getElementById('loginBtn').innerText = "Sign In";
+        }
+    });
+</script>
+
+</body>
+</html>
