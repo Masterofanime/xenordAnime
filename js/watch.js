@@ -55,7 +55,7 @@ const infoPageUrl = 'watch.html';
 // GLOBAL STATE
 
 const BASE_API = 'https://xeanime.vercel.app/api/v1';
-const BcApi = BASE_API;
+const BcApi = 'https://hianimebcapi.vercel.app/api/v1';
 
 const API_BASE = BASE_API;
 
@@ -401,7 +401,19 @@ const showEptitel = async () => {
   
   setTimeout(() => {
     const ep = episodesData.find(e => e.episodeNumber === currentActiveEp);
-    if (ep) currentEpid = ep.id;
+    
+    
+    let str = ep.id;
+let match = str.match(/ep=(\d+)/);
+
+if (match) {
+  // Convert to a number so you can compare it easily later
+  currentEpid = Number(match[1]);
+  
+  console.log("Stored ID as Number:", currentEpid); 
+}
+
+    
     
     // --- Check if user selected a server first ---
     if (!selectedServer.serverType) {
@@ -425,7 +437,11 @@ const showEptitel = async () => {
     }
     
     const embedUrl = `${BcApi}/embed/${serverType}/${currentEpid}/${language}`;
-    player.innerHTML = `<iframe src="${embedUrl}" id="playerFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`;
+    player.innerHTML = `<iframe src="${embedUrl}" id="playerFrame" width="100%" height="100%" 
+    frameborder="0"
+    allowfullscreen
+    ></iframe>`;
+    
     
     console.log('Current Episode ID:', currentEpid, 'Server:', serverType, 'Language:', language);
   }, 300);
@@ -1111,68 +1127,68 @@ if (!animeId || animeId === 'null' || animeId === 'undefined') {
    }
 }
 
+const iframe = document.getElementById("playerFrame");
+
+/* =====================================================
+  SEND AUTO SKIP SETTING TO IFRAME
+  ===================================================== */
+
+let autoSkipIntroOutro = true; // parent control
+
+async function  setAutoSkip(value) {
+  autoSkipIntroOutro = !!value;
+  
+ await iframe.contentWindow.postMessage(
+    {
+      type: "SET_AUTO_SKIP",
+      value: autoSkipIntroOutro
+    },
+    "*"
+  );
+  
+  console.log("Auto skip sent to iframe:", autoSkipIntroOutro);
+}
+
+// Example usage
+setAutoSkip(false); // enable
+// setAutoSkip(false); // disable
 
 
+/* =====================================================
+  RECEIVE EVENTS FROM IFRAME
+  ===================================================== */
+console.log(iframe)
+/* =====================================================
+  RECEIVE EVENTS FROM IFRAME
+  ===================================================== */
+window.addEventListener("message", (event) => {
+  // Use a console log to verify the event is firing
+  console.log("Message received from iframe:", event.data);
+  
+  const data = event.data;
+  if (!data || typeof data !== "object") return;
+  
+  /* ---------- VIDEO ENDED ---------- */
+  // Check if the iframe sent the ended signal
+  if (data.type === "VIDEO_ENDED" || data.event === "onEnded") {
+    console.log("Parent received signal: Video Finished.");
+
+    // Check if "Auto Next" setting is turned ON in your UI
+    if (settings.autonext) {
+       showNotification("info", "Auto-playing next episode...");
+       setTimeout(() => {
+           NextBtn(); // Calls your existing function to switch EPs
+       }, 1000); // 1 second delay for smooth transition
+    } else {
+       console.log("Auto Next is OFF. Staying on current episode.");
+    }
+  }
+});
+
+document.querySelector('.login-btn').addEventListener('click', () => {
+  window.location.href = 'login.html';
+});
 // Run on load
 window.onload = init;
 // --- SECTION END: Initialization ---
 
-// const iframe = document.getElementById("playerFrame");
-
-//   /* =====================================================
-//     SEND AUTO SKIP SETTING TO IFRAME
-//     ===================================================== */
-
-//   let autoSkipIntroOutro = true; // parent control
-
-//   function setAutoSkip(value) {
-//     autoSkipIntroOutro = !!value;
-
-//     iframe.contentWindow.postMessage(
-//       {
-//         type: "SET_AUTO_SKIP",
-//         value: autoSkipIntroOutro
-//       },
-//       "*"
-//     );
-
-//     console.log("Auto skip sent to iframe:", autoSkipIntroOutro);
-//   }
-
-//   // Example usage
-//   setAutoSkip(true);   // enable
-//   // setAutoSkip(false); // disable
-
-
-//   /* =====================================================
-//     RECEIVE EVENTS FROM IFRAME
-//     ===================================================== */
-
-//   window.addEventListener("message", (event) => {
-//     // OPTIONAL SECURITY CHECK
-//     // if (event.origin !== "https://your-embed-domain.com") return;
-
-//     const data = event.data;
-
-//     if (!data || typeof data !== "object") return;
-
-//     /* ---------- VIDEO ENDED ---------- */
-//     if (data.type === "VIDEO_ENDED") {
-//       console.log("Parent received VIDEO_ENDED");
-//       console.log("Video ID:", data.videoId);
-
-//       // 👉 example actions
-//       // playNextEpisode();
-//       // showRecommendation();
-//       // markAsWatched(data.videoId);
-//     }
-//   });
-
-//   /* =====================================================
-//     OPTIONAL HELPERS
-//     ===================================================== */
-
-//   function playNextEpisode() {
-//     console.log("Play next episode");
-//     // change iframe src to next video
-//   }

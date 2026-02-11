@@ -237,7 +237,9 @@ document.addEventListener("click", (e) => {
 });
 // --- SECTION END: Global Search Logic ---
 
-
+document.querySelector('.login-btn').addEventListener('click', () => {
+    window.location.href = 'login.html';
+});
 
 
 // --- SECTION START: Mobile Search UI Toggle ---
